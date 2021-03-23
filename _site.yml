@@ -1,0 +1,8 @@
+name: "my-website"
+navbar:
+  title: "SMU DDS"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "6306 DDS Case Study 1"
+      href: DDSCaseStudy1.html
