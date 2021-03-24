@@ -16,14 +16,15 @@ library(dplyr)
 #install.packages("shinyWidgets")
 library(shinyWidgets)
 library(ggplot2)
-beers = read.csv("https://github.com/RashmiAPatel19/SMU_MSDS_6306_CaseStudy1_Spring2021/blob/main/Beers.csv", header = TRUE)
-breweries = read.csv("https://github.com/RashmiAPatel19/SMU_MSDS_6306_CaseStudy1_Spring2021/blob/main/Breweries.csv", header = TRUE)
+beers = read.csv("https://raw.githubusercontent.com/RashmiAPatel19/SMU_MSDS_6306_CaseStudy1_Spring2021/main/Beers.csv", header = TRUE)
+breweries = read.csv("https://raw.githubusercontent.com/RashmiAPatel19/SMU_MSDS_6306_CaseStudy1_Spring2021/main/Breweries.csv", header = TRUE)
+beerbrew <- merge(beers,breweries, by.x = "Brewery_id", by.y = "Brew_ID")
 
 state_list <- unique(beerbrew$State)
 state_list<-sort(state_list, decreasing=FALSE)
 
 
-ui = fluidPage(
+ui <- fluidPage(
   
   # App title ----
   titlePanel("Explore Beer Data"),
@@ -38,7 +39,7 @@ ui = fluidPage(
        selectInput("parameter", label = h3("Parameter Selection"), 
                     choices = list("IBU" = "IBU", "ABV" = "ABV"), 
                     selected = 1),
-                     
+                    hr(),
                     fluidRow(column(3, verbatimTextOutput("parameter"))),
       
        
@@ -47,7 +48,7 @@ ui = fluidPage(
     choices = list("Histogram" = 1, "Boxplot" = 2), 
     selected = 1),
   
-
+  hr(),
   fluidRow(column(3, verbatimTextOutput("typeplot"))), 
 
   # Copy the chunk below to make a group of checkboxes
@@ -56,13 +57,13 @@ ui = fluidPage(
         actionsBox = TRUE)),
   
   
-
+  hr(),
   fluidRow(column(3, verbatimTextOutput("states"))),
   
     # Copy the line below to make a checkbox
   checkboxInput("regression", label = "Add a Regression Line", value = FALSE),
   
- 
+  hr(),
   fluidRow(column(3, verbatimTextOutput("regression"))),
   
   
@@ -79,7 +80,7 @@ ui = fluidPage(
 
 
 # Define server logic required to draw a histogram ----
-server = function(input, output) {
+server <- function(input, output) {
   
   output$distPlot1 <- renderPlot({
     
@@ -138,5 +139,5 @@ server = function(input, output) {
     
 }
 
-shinyApp(ui, server)
+shinyApp(ui, server,options=list(height=1080,width=1080))
 ```
